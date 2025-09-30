@@ -17,3 +17,4 @@ Thumbs.db
 
 # VSCode settings (optional, ignore if you don’t want to commit settings)
 .vscode/
+"node_modules/" 
