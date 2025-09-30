@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ibmLoginApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM FE Login</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- AngularJS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+
+  <!-- App Scripts (order matters!) -->
+  <script src="app.js"></script>
+  
+  <!-- Services -->
+  <script src="services/authService.js"></script>
+  <script src="services/dashboardService.js"></script>
+
+  <!-- Controllers -->
+  <script src="controllers/loginController.js"></script>
+  <script src="controllers/dashboardController.js"></script>
+  <script src="controllers/forgotPasswordController.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- AngularJS will inject views here -->
+    <ng-view></ng-view>
+  </div>
+
+  <!-- Optional: Live reload or scripts for debugging -->
+  <script>
+    console.log("IBM FE Login App loaded successfully.");
+  </script>
+</body>
+</html>
