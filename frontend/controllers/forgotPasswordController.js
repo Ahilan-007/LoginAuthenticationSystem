@@ -6,18 +6,32 @@ angular.module('ibmLoginApp')
   $scope.error = '';
 
   $scope.resetPassword = function() {
-    if(!$scope.email){
+    if (!$scope.email) {
       $scope.error = 'Please enter a valid email.';
+      $scope.message = '';
       return;
     }
 
     AuthService.forgotPassword($scope.email)
       .then(res => {
-        $scope.message = res.data.message;
+        console.log('✅ Forgot password response:', res.data);
+        $scope.message = res.data?.message || 'Password reset link sent.';
         $scope.error = '';
       })
       .catch(err => {
-        $scope.error = err.data.message || 'Error resetting password';
+        console.error('❌ Forgot password error:', err);
+
+        // Robust error extraction
+        let errorMessage = 'Error resetting password';
+        if (err?.data?.message) {
+          errorMessage = err.data.message;
+        } else if (err?.message) {
+          errorMessage = err.message;
+        } else if (typeof err === 'string') {
+          errorMessage = err;
+        }
+
+        $scope.error = errorMessage;
         $scope.message = '';
       });
   };
