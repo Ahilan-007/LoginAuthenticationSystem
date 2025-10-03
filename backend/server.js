@@ -1,4 +1,6 @@
-require("dotenv").config();
+// Load environment variables
+require('dotenv').config({ path: __dirname + '/../.env' });
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -10,20 +12,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET_KEY = process.env.JWT_SECRET;
 
+// Build MongoDB URI from environment variables
+const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
+// Debug log (mask password)
+console.log("🔎 Mongo URI is:", mongoURI.replace(process.env.DB_PASS, "*****"));
+
 // Middleware
 app.use(cors({ exposedHeaders: ['x-access-token'] }));
 app.use(bodyParser.json());
 
-// Build MongoDB URI from environment variables
-const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.error("❌ MongoDB connection error:", err));
+mongoose.connect(mongoURI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // User schema
 const userSchema = new mongoose.Schema({
@@ -37,9 +39,12 @@ const User = mongoose.model("User", userSchema);
 app.post("/register", async (req, res) => {
   const { email, password, name } = req.body;
   try {
-    if (await User.findOne({ email })) return res.status(400).json({ message: "User already exists" });
+    if (await User.findOne({ email }))
+      return res.status(400).json({ message: "User already exists" });
+
     const hashedPassword = bcrypt.hashSync(password, 8);
     await new User({ email, password: hashedPassword, name }).save();
+
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
     console.error(err);
@@ -54,9 +59,15 @@ app.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    if (!bcrypt.compareSync(password, user.password)) return res.status(401).json({ message: "Invalid password" });
+    if (!bcrypt.compareSync(password, user.password))
+      return res.status(401).json({ message: "Invalid password" });
 
-    const token = jwt.sign({ email: user.email, name: user.name }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { email: user.email, name: user.name },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
     res.json({ token, name: user.name });
   } catch (err) {
     console.error(err);
@@ -86,6 +97,7 @@ app.post("/forgot-password", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Email not found" });
+
     res.json({ message: "Password reset link sent to email (mock)." });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
