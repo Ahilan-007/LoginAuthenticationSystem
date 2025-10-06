@@ -1,4 +1,5 @@
 angular.module('ibmLoginApp', ['ngRoute'])
+.constant('API_URL', 'https://loginauthenticationsystem.onrender.com') // add this line
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider
     .when('/login', {
@@ -17,6 +18,5 @@ angular.module('ibmLoginApp', ['ngRoute'])
       redirectTo: '/login'
     });
 
-  // Remove '!' from URLs for cleaner hash-based routing
   $locationProvider.hashPrefix('');
 }]);
