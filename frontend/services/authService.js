@@ -1,7 +1,7 @@
 angular.module('ibmLoginApp')
 .factory('AuthService', function($http, $window) {
 
-  const API_URL = 'http://localhost:5000'; // Backend URL
+  const API_URL = 'https://loginauthenticationsystem.onrender.com'; // Backend URL
 
   return {
     // Login user
