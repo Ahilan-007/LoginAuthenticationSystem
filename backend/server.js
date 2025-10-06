@@ -18,8 +18,19 @@ const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
 // Debug log (mask password)
 console.log("🔎 Mongo URI is:", mongoURI.replace(process.env.DB_PASS, "*****"));
 
+// CORS setup: allow local testing and deployed frontend
+const corsOptions = {
+  origin: [
+    'http://127.0.0.1:5500',       // local frontend
+    'https://loginauthenticationsystem.onrender.com' // deployed frontend
+  ],
+  exposedHeaders: ['x-access-token'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-access-token']
+};
+app.use(cors(corsOptions));
+
 // Middleware
-app.use(cors({ exposedHeaders: ['x-access-token'] }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
