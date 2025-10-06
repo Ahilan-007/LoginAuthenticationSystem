@@ -12,7 +12,7 @@ angular.module('ibmLoginApp')
 
   const token = $window.localStorage.getItem('token');
 
-  $http.get('http://localhost:5000/dashboard', {
+  $http.get(API_URL + '/dashboard', {
     headers: { 'x-access-token': token }
   })
   .then(res => {

@@ -1,6 +1,6 @@
 angular.module('ibmLoginApp')
 .factory('DashboardService', function($http, $window) {
-  const API_URL = 'http://localhost:5000';
+  const API_URL = 'https://loginauthenticationsystem.onrender.com';
 
   return {
     getDashboardData: function() {
