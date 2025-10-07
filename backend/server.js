@@ -18,11 +18,11 @@ const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
 // Debug log (mask password)
 console.log("🔎 Mongo URI is:", mongoURI.replace(process.env.DB_PASS, "*****"));
 
-// CORS setup: allow local testing and deployed frontend
+// ✅ CORS setup: allow local testing and deployed Netlify frontend
 const corsOptions = {
   origin: [
-    'http://127.0.0.1:5500',       // local frontend
-    'https://loginauthenticationsystem.onrender.com' // deployed frontend
+    'http://127.0.0.1:5500',                     // Local frontend
+    'https://loginauthenticationsystem.netlify.app' // Deployed frontend (Netlify)
   ],
   exposedHeaders: ['x-access-token'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
