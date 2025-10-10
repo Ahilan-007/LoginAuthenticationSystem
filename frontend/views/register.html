@@ -1,0 +1,47 @@
+<div class="card">
+  <h2>Register</h2>
+  <form name="registerForm" ng-submit="register()" novalidate>
+
+    <!-- Name -->
+    <div class="mb-3">
+      <label for="name">Name:</label>
+      <input type="text" id="name" class="form-control" name="name" ng-model="user.name" required>
+      <span ng-show="registerForm.name.$touched && registerForm.name.$invalid" class="error">
+        Name is required.
+      </span>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="form-control" name="email" ng-model="user.email" required>
+      <span ng-show="registerForm.email.$touched && registerForm.email.$invalid" class="error">
+        Please enter a valid email.
+      </span>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label for="password">Password:</label>
+      <input type="password" id="password" class="form-control" name="password" ng-model="user.password" required>
+      <span ng-show="registerForm.password.$touched && registerForm.password.$invalid" class="error">
+        Password is required.
+      </span>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary" ng-disabled="registerForm.$invalid">Register</button>
+
+    <!-- Error message -->
+    <div class="alert alert-danger mt-2" ng-if="error">{{ error }}</div>
+
+    <!-- Success message -->
+    <div class="alert alert-success mt-2" ng-if="success">{{ success }}</div>
+
+  </form>
+
+  <p class="text-center mt-3">
+    Already have an account? 
+    <a href="#!/login">Login</a>
+  </p>
+</div>
