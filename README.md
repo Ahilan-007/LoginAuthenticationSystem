@@ -1,4 +1,4 @@
-# IBM FE Login Authentication System
+# Login Authentication System
 
 ## Project Overview
 The IBM FE Login Authentication System is a web-based application that provides a secure user authentication mechanism. The system allows users to **register**, **login**, **access a protected dashboard**, and **reset their passwords**. It is built using **AngularJS** for the frontend and **Node.js + Express + MongoDB** for the backend, providing a full-stack solution with JWT-based authentication.
